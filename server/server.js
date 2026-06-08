@@ -1,9 +1,11 @@
 import express from 'express'
+import giftsRouter from './routes/gifts.js'
 const app = express()
 /*middleware function that  serve static files from various client directory
 essentially allowing an external client to read the data from my local client*/
 app.use('/public', express.static('./public'))
 app.use('/scripts', express.static('./public/scripts'))
+app.use('/gifts', giftsRouter)
 /*Route for the root url
 Route - specific url in webpage paired with a http method to perform an action*/
 app.get('/',(req, res) => 
