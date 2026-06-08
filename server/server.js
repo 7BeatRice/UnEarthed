@@ -15,7 +15,7 @@ app.get('/',(req, res) =>
 )
 
 /*Start a server at a specified port and listen for requests from external client*/
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log('Server listening on http://localhost:',PORT)
 })
