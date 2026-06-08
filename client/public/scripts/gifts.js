@@ -14,7 +14,8 @@ const renderGifts = async () => {
             const bottomContainer = document.createElement('div')
             bottomContainer.classList.add("bottom-container")
 
-            topContainer.style.backgroundImage = 'url(${gift.image})'
+            topContainer.style.backgroundImage = `url(${gift.image})`
+
 
             const title = document.createElement('h3')
             title.textContent = gift.name
