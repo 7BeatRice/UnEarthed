@@ -31,7 +31,7 @@ const renderGifts = async () => {
 
             const moreInfo = document.createElement('a')
             moreInfo.textContent = "Read More >"
-            moreInfo.href = '/gifts/${gift.id}'
+            moreInfo.href = `/gifts/${gift.id}`
             moreInfo.setAttribute('role', 'button')
             bottomContainer.appendChild(moreInfo)
             giftDiv.appendChild(topContainer)
@@ -50,13 +50,17 @@ const renderGifts = async () => {
 }
 
 const renderGift = async() =>{
-    const requestedID = parseInt(window.location.href.split('/').pop())
+    const parts = window.location.href.split('/');
+    console.log(parts); // View this in your browser's F12 console
+    const lastSegment = parts.pop();
+    const requestID = parseInt(lastSegment);
+    console.log("requested id: " + requestID)
     const response = await fetch('/gifts')
     const data = await response.json()
     const giftContent = document.getElementById('gift-content')
     let gift
     if (data){
-        gift = data.find(gift => gift.id === requestedID)
+        gift = data.find(gift => gift.id === requestID)
         if (gift){
             const giftImage = document.getElementById('image')
             giftImage.src = gift.image
@@ -86,5 +90,12 @@ const renderGift = async() =>{
         }
     }
 }
-renderGifts()
+
+const requestedUrl = window.location.href.split('/').pop()
+if(requestedUrl){
+    window.location.href = '../404.html'
+}
+else{
+    renderGifts()
+}
 renderGift()
