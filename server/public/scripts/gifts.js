@@ -48,4 +48,43 @@ const renderGifts = async () => {
         mainContent.appendChild(noGiftsH2)
     }
 }
+
+const renderGift = async() =>{
+    const requestedID = parseInt(window.location.href.split('/').pop())
+    const response = await fetch('/gifts')
+    const data = await response.json()
+    const giftContent = document.getElementById('gift-content')
+    let gift
+    if (data){
+        gift = data.find(gift => gift.id === requestedID)
+        if (gift){
+            const giftImage = document.getElementById('image')
+            giftImage.src = gift.image
+
+            const name = document.getElementById("name")
+            name.textContent = gift.name
+
+            const submittedBy = document.getElementById('submittedBy')
+            submittedBy.textContent = 'Submitted by: ' + gift.submittedBy
+
+            const pricePoint = document.getElementById('pricePoint')
+            pricePoint.textContent = 'Price: ' + gift.pricePoint
+
+            const audience = document.getElementById('audience')
+            audience.textContent = 'Great For: ' + gift.audience
+
+            const description = document.getElementById('description')
+            description.textContent = gift.description
+            
+            document.title = `UnEarthed - ${gift.name}`        
+
+        }
+        else{
+            const noGifts = document.createElement("h2")
+            noGifts.textContent = "No Gifts Available 😞"
+            giftContent.appendChild(noGifts)
+        }
+    }
+}
 renderGifts()
+renderGift()
