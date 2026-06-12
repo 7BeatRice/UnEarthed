@@ -2,9 +2,9 @@
 Generates gifts table and load json data into database
 */
 
-import pool from 'database.js'
-import 'dotenv.js'
-import giftData from 'data/gifts.js'
+import {pool} from './database.js'
+import './dotenv.js'
+import giftData from '../data/gifts.js'
 
 //create empty table with colmns id, name, pricePoint, audience, image, description, subbmittedOn, submittedBy
 const createGiftsTable = async() => {
@@ -12,7 +12,7 @@ const createGiftsTable = async() => {
     const createTableQuery = `
     DROP TABLE IF EXISTS gifts;
     
-    CREATE TABOLE IF NOT EXISTS gifts(
+    CREATE TABLE IF NOT EXISTS gifts(
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         pricePoint VARCHAR(10) NOT NULL,
@@ -24,19 +24,21 @@ const createGiftsTable = async() => {
     )
     `
 
+    //try creating the table
+    try{
+        const result = await pool.query(createTableQuery)
+        console.log("Gifts table created successfully!")
+    }
+    catch(err){
+        console.error('Error creating gifts table', err)
+    } 
+
 }
 
-//try creating the table
-try{
-    const result = await pool.query(createTableQuery)
-    console.log("Gifts table created successfully!")
-}
-catch(err){
-    console.error('Error creating gifts table', err)
-} 
 
 
-const seeGiftTable = async() =>{
+
+const seedGiftsTable = async() =>{
     await createGiftsTable()
     giftData.forEach((gift) =>
     {
@@ -52,8 +54,8 @@ const seeGiftTable = async() =>{
             gift.audience,
             gift.image,
             gift.description,
-            gift.submiitedBy,
-            gift.submiittedOn
+            gift.submittedBy,
+            gift.submittedOn
         ]
 
         //in potgresql, query maps the values to their corresponsing place holder
