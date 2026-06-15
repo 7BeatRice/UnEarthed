@@ -1,5 +1,5 @@
 import express from 'express'
-import 'config/dotenv.js'
+import './config/dotenv.js'
 import giftsRouter from './routes/gifts.js'
 const app = express()
 /*middleware function that  serve static files from various client directory
