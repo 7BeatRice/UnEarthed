@@ -12,7 +12,7 @@ const router = express.Router()
 })*/
 router.get('/:giftId', (req, res) =>
 {
-    res.status(200).sendFile(path.resolve(__dirname, '../public/gift.html'))
+    res.status(200).sendFile(path.resolve(__dirname, '../../dist/gift.html'))
 })
 router.get('/', giftController.getGifts)
 

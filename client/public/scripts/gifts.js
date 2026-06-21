@@ -22,7 +22,7 @@ const renderGifts = async () => {
             bottomContainer.appendChild(title)
 
             const price = document.createElement('p')
-            price.textContent = 'Price: ' +gift.pricePoint
+            price.textContent = 'Price: ' +gift.pricepoint
             bottomContainer.appendChild(price)
 
             const audience = document.createElement('p')
@@ -57,10 +57,12 @@ const renderGift = async() =>{
     console.log("requested id: " + requestID)
     const response = await fetch('/gifts')
     const data = await response.json()
+    
     const giftContent = document.getElementById('gift-content')
     let gift
     if (data){
         gift = data.find(gift => gift.id === requestID)
+        console.log("gift: "+gift.image)
         if (gift){
             const giftImage = document.getElementById('image')
             giftImage.src = gift.image
@@ -69,10 +71,10 @@ const renderGift = async() =>{
             name.textContent = gift.name
 
             const submittedBy = document.getElementById('submittedBy')
-            submittedBy.textContent = 'Submitted by: ' + gift.submittedBy
+            submittedBy.textContent = 'Submitted by: ' + gift.submittedby
 
             const pricePoint = document.getElementById('pricePoint')
-            pricePoint.textContent = 'Price: ' + gift.pricePoint
+            pricePoint.textContent = 'Price: ' + gift.pricepoint
 
             const audience = document.getElementById('audience')
             audience.textContent = 'Great For: ' + gift.audience
@@ -91,12 +93,29 @@ const renderGift = async() =>{
     }
 }
 
-const requestedUrl = window.location.href.split('/').pop()
-console.log("requested url" +requestedUrl)
-if(requestedUrl > 9){
-    window.location.href = '../404.html'
+const display =async() =>{
+    requestedUrl =  window.location.href.split('/')
+    requestedId = requestedUrl.pop()
+    console.log("requested url" +requestedUrl)
+    giftRoute = requestedUrl.pop()
+    const reponse = await fetch('/gifts')
+    const data = await reponse.json()
+    if (data){
+        const dataIds = data.map(item => item.id)
+    console.log(dataIds)
+
+    if (!requestedId){
+        renderGifts()
+    }
+    else if (giftRoute === 'gifts' && dataIds.includes(Number(requestedId)) ) {
+        renderGift()
+    }
+    else{
+        window.location.href = '../404.html'
+    }
+
+    }
+    
 }
-else{
-    renderGifts()
-}
-renderGift()
+
+display()
