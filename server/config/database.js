@@ -10,7 +10,8 @@ const config = {
     database: process.env.PGDATABASE,
     ssl: {
         rejectUnauthorized: false
-    }
+    },
+    max: 1,
 }
 
 //config the pool object

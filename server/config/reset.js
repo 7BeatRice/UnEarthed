@@ -66,7 +66,7 @@ const seedGiftsTable = async() =>{
                 console.error('Errro inserting gifts', err)
                 return
             }
-            console.log(`${gift.pricePoint} added successfully`)
+            console.log(`${gift.name} added successfully`)
         })
     }
     )

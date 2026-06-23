@@ -1,11 +1,15 @@
 import express from 'express'
 import './config/dotenv.js'
 import giftsRouter from './routes/gifts.js'
+import cors from 'cors'
+
 const app = express()
-/*middleware function that  serve static files from various client directory
-essentially allowing an external client to read the data from my local client*/
-app.use('./public', express.static('../dist'))
-app.use('/scripts', express.static('../dist/scripts'))
+
+
+//add cors middleware intercepting request to add http header which tells broswer what to do with requests
+app.use(cors())
+
+app.use('/gifts', giftsRouter)
 
 /*Route for the root url
 Route - specific url in webpage paired with a http method to perform an action*/
@@ -15,7 +19,7 @@ app.get('/',(req, res) =>
 }
 )
 
-app.use('/gifts', giftsRouter)
+
 /*Start a server at a specified port and listen for requests from external client*/
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
