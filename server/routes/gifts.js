@@ -1,19 +1,15 @@
 import express from 'express'
-import path from 'path'
+
 //fileURLToPath method from the url module
-import {fileURLToPath} from 'url'
 import giftController from '../controllers/gifts.js'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+
 
 const router = express.Router()
 /*router.get('/', (req, res) => {
     res.status(200).json(giftData)
 })*/
-router.get('/:giftId', (req, res) =>
-{
-    res.status(200).sendFile(path.resolve(__dirname, '../../dist/gift.html'))
-})
+
 router.get('/', giftController.getGifts)
+router.get('/:giftId', giftController.getGiftsById)
 
 export default router

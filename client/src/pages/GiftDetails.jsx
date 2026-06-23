@@ -1,25 +1,35 @@
 
-
+import { useParams } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import './GiftDetails.css'
 
 const GiftDetails = ({data}) => {
 
+    const {id} = useParams()
+
     const [gift, setGift] = useState({id: 0, name: "", pricepoint: "", audience: "", image: "", description: "", submittedby: "", submittedon: ""})
 
 
     useEffect(() => {
+        
+        const fetchGiftsById = async() => {
+            console.log(id)
+            const response = await fetch(`http://localhost:3001/gifts/${id}`)
+            const data = await response.json()
+            setGift(data)
+        }
 
-    }, []);
+        fetchGiftsById()
+    }, [data, id]);
 
 
     return (
         <div className="GiftDetails">
-            <main id="gift-content" class="gift-info">
-                <div class="image-container">
+            <main id="gift-content" className="gift-info">
+                <div className="image-container">
                     <img id="image" src={gift.image} />
                 </div>
-                <div class="gift-details">
+                <div className="gift-details">
                     <h2 id="name">{gift.name}</h2>
                     <p id="submittedBy">{'Submitted By: ' + gift.submittedby}</p>
                     <p id="pricePoint">{'Price: ' + gift.pricepoint}</p>
