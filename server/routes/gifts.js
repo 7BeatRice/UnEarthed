@@ -12,4 +12,8 @@ const router = express.Router()
 router.get('/', giftController.getGifts)
 router.get('/:giftId', giftController.getGiftsById)
 
+router.post('/', giftController.createGift)
+router.delete('/:giftId', giftController.deleteGift)
+router.patch('/:giftId', giftController.updateGift)
+
 export default router

@@ -8,7 +8,7 @@ const app = express()
 
 //add cors middleware intercepting request to add http header which tells broswer what to do with requests
 app.use(cors())
-
+app.use(express.json())
 app.use('/gifts', giftsRouter)
 
 /*Route for the root url
