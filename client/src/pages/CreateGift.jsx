@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './CreateGift.css'
+import '../css/CreateGift.css'
 
 const CreateGift = () => {
 
@@ -9,6 +9,7 @@ const CreateGift = () => {
     let year = date.getFullYear()
     let currentDate = year + '-' + month + '-' + day
 
+     
     const [gift, setGift] = useState({
         id: 0, name: '',
         pricepoint: '',
@@ -19,6 +20,9 @@ const CreateGift = () => {
         submittedon: currentDate
     })
     
+    
+  
+
     const handleChange = (event) => {
         const { name, value } = event.target
 
@@ -29,13 +33,28 @@ const CreateGift = () => {
             }
         })
     }
-    
+      
     const createGift = (event) => {
         event.preventDefault()
-
-        
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(gift),
+        }
+        try{
+             fetch('/gifts', options)
+        }
+        catch(error){
+            console.error(error)
+        }
+       
+        window.location = '/'
         
     }
+   
+
 
     return (
         <div className='CreateGift'>

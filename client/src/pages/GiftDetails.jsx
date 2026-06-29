@@ -1,7 +1,7 @@
 
 import { useParams } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
-import './GiftDetails.css'
+import '../css/GiftDetails.css'
 
 const GiftDetails = ({data}) => {
 
@@ -14,7 +14,7 @@ const GiftDetails = ({data}) => {
         
         const fetchGiftsById = async() => {
             console.log(id)
-            const response = await fetch(`http://localhost:3001/gifts/${id}`)
+            const response = await fetch(`/gifts/${id}`)
             const data = await response.json()
             setGift(data)
         }

@@ -26,9 +26,10 @@ const getGiftsById = async (req, res) => {
 
 const createGift = async(req, res) => {
     try{
-        const {name, pricepoint, audience, image, description, submittedby, submittedon} = req.body()
-        insertQuery = "INSERT INTO gifts  (name, pricepoint, audience, image, description, submittedby, submittedon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
-        const result = pool.query(insertQuery, [name, pricepoint, audience, image, description, submittedby, submittedon])
+        console.log("entered create gift controller")
+        const {name, pricepoint, audience, image, description, submittedby, submittedon} = req.body
+        const insertQuery = "INSERT INTO gifts  (name, pricepoint, audience, image, description, submittedby, submittedon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
+        const result = await pool.query(insertQuery, [name, pricepoint, audience, image, description, submittedby, submittedon])
         res.status(201).json(result.rows[0])
     }
     catch(error){
@@ -38,10 +39,12 @@ const createGift = async(req, res) => {
 
 const updateGift = async(req, res) => {
     try{
-        const giftId = parseInt(req.params.id)
-        const {name, pricepoint, audience, image, description, submittedby, submittedon} = req.body()
-        updateQuery = 'UPDATE gifts SET name = $1, pricepoint = $2, audience = $3, image = $4, description = $5, submittedby = $6, submittedon = $7 WHERE id = $8'
-        const result = pool.query(updateQuery, [name, pricepoint, audience, image, description, submittedby, submittedon, giftId])
+        console.log("entered update gift controller")
+        console.log("parems id ",req.params.giftId)
+        const giftId = parseInt(req.params.giftId)
+        const {name, pricepoint, audience, image, description, submittedby, submittedon} = req.body
+        const updateQuery = 'UPDATE gifts SET name = $1, pricepoint = $2, audience = $3, image = $4, description = $5, submittedby = $6, submittedon = $7 WHERE id = $8'
+        const result = await pool.query(updateQuery, [name, pricepoint, audience, image, description, submittedby, submittedon, giftId])
         res.status(200).json(result.rows[0])
 
     }
@@ -52,10 +55,12 @@ const updateGift = async(req, res) => {
 
 const deleteGift = async(req, res) => {
     try{
-        const giftId = pareseInt(req.params.id)
+        console.log("entered delete gift controller")
+        console.log("parems id ",req.params.giftId)
+        const giftId = parseInt(req.params.giftId)
         const deleteQuery = 'DELETE FROM gifts WHERE id = $1'
-        const reponse = pool.query(deleteQuery, [giftId])
-        res.status(201).json(reponse.rows[0])
+        const response = await pool.query(deleteQuery, [giftId])
+        res.status(200).json(response.rows[0])
 
     }
     catch(error){

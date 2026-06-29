@@ -8,6 +8,7 @@ const app = express()
 
 //add cors middleware intercepting request to add http header which tells broswer what to do with requests
 app.use(cors())
+//express.json() middleware makes json data available in req.body
 app.use(express.json())
 app.use('/gifts', giftsRouter)
 

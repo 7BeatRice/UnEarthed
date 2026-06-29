@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
-import './EditGift.css'
+import '../css/EditGift.css'
 
 const EditGift = () => {
 
@@ -39,13 +39,37 @@ const EditGift = () => {
     
     const updateGift = (event) => {
         event.preventDefault()
+        const options = {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(gift),
+        }
+        try{
+            fetch(`/gifts/${id}`, options)
+        }
+        catch(error){
+            console.error(error)
+        }
+        
+        window.location = '/'
 
         
     }
 
     const deleteGift = (event) => {
         event.preventDefault()
-
+        const options = {
+            method: 'DELETE'
+        }
+          try{
+            fetch(`/gifts/${id}`, options)
+        }
+        catch(error){
+            console.error(error)
+        }
+        window.location = '/'
         
     }
 
